@@ -10,3 +10,5 @@ cd db
     -npx sequelize-cli init
 move db/conifg as ./config/database.json
 create .sequelizerc
+<br/>
+create orm
