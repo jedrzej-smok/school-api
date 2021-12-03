@@ -12,6 +12,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsToMany(models.DanceGenre,{
+        foreignKey:'fkInstructorId',
+        through:'InstructorAndGenre'
+      });
+
+      this.hasMany(models.Assignment,{
+        foreignKey: {
+          allowNull:false,
+          name: 'instructorId',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   };
   Instructor.init({

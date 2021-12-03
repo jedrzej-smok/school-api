@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.Registration,{
+        foreignKey: {
+          allowNull:false,
+          name: 'participantId',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   };
   Participant.init({
