@@ -14,7 +14,7 @@ module.exports = {
       {
         email: 'igorMazur@example.com',
         password: 'igorMazur',
-        name:'Laura',
+        name:'Igor',
         surname:'Mazur',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -29,7 +29,7 @@ module.exports = {
       },
       {
         email: 'leonMazur@example.com',
-        password: 'lauraMazur',
+        password: 'leonMazur',
         name:'Leon',
         surname:'Mazur',
         createdAt: new Date(),
