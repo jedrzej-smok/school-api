@@ -15,6 +15,7 @@ const {adminRouter} = require("./routes/admin");
 const {instructorRouter} = require("./routes/instructor");
 const {participantRouter} = require("./routes/participant");
 const {levelRouter} = require("./routes/levelRouter")
+const {roomRouter} = require("./routes/roomRouter")
 
 const { userLoginRouter } = require("./routes/userLogin");
 
@@ -49,7 +50,7 @@ app.use('/instructor', instructorRouter);
 app.use('/participant', participantRouter);
 
 app.use('/admin',levelRouter);
-
+app.use('/admin',roomRouter);
 
 
 

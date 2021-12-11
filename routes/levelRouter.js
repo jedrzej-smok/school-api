@@ -61,7 +61,7 @@ levelRouter
             console.log("level created:");
             res
                 .status(200)
-                .send(JSON.stringify(level.name));
+                .send(JSON.stringify({name: level.name}));
     
         }catch(err){
             console.log(err);

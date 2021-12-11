@@ -7,6 +7,8 @@ class InvalidPasswordError extends Error{};
 class NotFoundLevelNameError extends Error{};
 class SameLevelNameError extends Error{};
 
+class NotFoundRoomNameError extends Error{};
+class SameRoomNameError extends Error{};
 
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
@@ -31,6 +33,7 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    //level
     if(err instanceof NotFoundLevelNameError){
         res.status(404);
         res.send({
@@ -46,6 +49,23 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    //room
+    if(err instanceof NotFoundRoomNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono sali o danej nazwie',
+        });
+        return;
+    }
+
+    if(err instanceof SameRoomNameError){
+        res.status(400);
+        res.send({
+            message: 'Sala o podanej nazwie już istnieje',
+        });
+        return;
+    }
+    //
 
 
 
@@ -62,5 +82,7 @@ module.exports={
     NotFoundUserNameError,
     InvalidPasswordError,
     NotFoundLevelNameError,
-    SameLevelNameError
+    SameLevelNameError,
+    NotFoundRoomNameError,
+    SameRoomNameError
 }
