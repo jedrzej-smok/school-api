@@ -4,6 +4,10 @@ class NotFoundError extends Error{};
 class NotFoundUserNameError extends Error{};
 class InvalidPasswordError extends Error{};
 
+class NotFoundLevelNameError extends Error{};
+class SameLevelNameError extends Error{};
+
+
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
         res.status(404);
@@ -27,6 +31,22 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    if(err instanceof NotFoundLevelNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono poziomu o danej nazwie',
+        });
+        return;
+    }
+
+    if(err instanceof SameLevelNameError){
+        res.status(400);
+        res.send({
+            message: 'Poziom o podanej nazwie już istnieje',
+        });
+        return;
+    }
+
 
 
     console.error(err.message);
@@ -41,4 +61,6 @@ module.exports={
     NotFoundError,
     NotFoundUserNameError,
     InvalidPasswordError,
+    NotFoundLevelNameError,
+    SameLevelNameError
 }

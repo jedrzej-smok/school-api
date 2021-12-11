@@ -9,13 +9,19 @@ const cookieParser = require('cookie-parser')
 const db = require("./mainDB/models/index");
 const {testDBconnection} = require("./test");
 const {handleError} = require("./utils/errors");
+
 const {homeRouter} = require("./routes/home");
+const {adminRouter} = require("./routes/admin");
+const {instructorRouter} = require("./routes/instructor");
+const {participantRouter} = require("./routes/participant");
+const {levelRouter} = require("./routes/levelRouter")
+
 const { userLoginRouter } = require("./routes/userLogin");
 
 //db connection, models synchronization
 async function createDB(){
     const testDB = await testDBconnection(db);
-    const syncDB = await db.sequelize.sync();
+    const syncDB = await db.sequelize.sync(/*{force:true}*/);
     await Promise.all([testDB,syncDB]);
     console.log("All models were synchronized successfully.");
 };
@@ -38,6 +44,14 @@ app.use(cookieParser());
 //routes_________________________________________________________________________________________________________________________
 app.use('/',homeRouter);
 app.use('/login', userLoginRouter);
+app.use('/admin', adminRouter);
+app.use('/instructor', instructorRouter);
+app.use('/participant', participantRouter);
+
+app.use('/admin',levelRouter);
+
+
+
 
 
 

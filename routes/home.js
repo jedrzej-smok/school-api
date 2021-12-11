@@ -7,7 +7,7 @@ homeRouter
         res
             .cookie('role','guest')
             .status(200)
-            .send('OK');
+            .send('Strona główna');
     });
 
 module.exports = {
