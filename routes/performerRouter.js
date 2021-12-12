@@ -42,7 +42,6 @@ performerRouter
             .send(JSON.stringify(performer));
 
     }catch(err){
-        console.log(err);
         next(err);
     }
 })

@@ -13,6 +13,9 @@ class SameRoomNameError extends Error{};
 class NotFoundPerformerNameError extends Error{};
 class SamePerformerNameError extends Error{};
 
+class NotFoundSongNameError extends Error{};
+class SameSongNameError extends Error{};
+
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
         res.status(404);
@@ -84,6 +87,22 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    //song
+    if(err instanceof NotFoundSongNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono piosenki o danej nazwie',
+        });
+        return;
+    }
+
+    if(err instanceof SameSongNameError){
+        res.status(400);
+        res.send({
+            message: 'Piosenka o podanej nazwie już istnieje',
+        });
+        return;
+    }
     //
 
 
@@ -105,5 +124,7 @@ module.exports={
     NotFoundRoomNameError,
     SameRoomNameError,
     NotFoundPerformerNameError,
-    SamePerformerNameError
+    SamePerformerNameError,
+    NotFoundSongNameError,
+    SameSongNameError
 }
