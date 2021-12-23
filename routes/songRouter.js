@@ -1,6 +1,6 @@
 const express = require('express');
 const songRouter = express.Router();
-const { Sequelize, Op, Model, DataTypes } = require("sequelize");
+const { Sequelize, Op, Model, DataTypes, where } = require("sequelize");
 const db = require("../mainDB/models/index");
 const {NotFoundSongNameError, SameSongNameError, NotFoundPerformerNameError} = require("../utils/errors");
 const {checkAuth} = require("../utils/auth");
@@ -150,6 +150,11 @@ songRouter
         });
         if(!performer){
             throw new NotFoundPerformerNameError();
+        }
+        const checkSong =  await db.Song.findOne({where:{title: title}});
+        // console.log(`checkSong:${checkSong}`);
+        if(checkSong){
+            throw new SameSongNameError();
         }
         await db.Song.update({title: title, source: source, performerId: performer.performerId},{
             where:{

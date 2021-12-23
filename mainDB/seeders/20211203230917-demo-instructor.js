@@ -14,7 +14,7 @@ module.exports = {
       },
       {
         email: 'janNowak@example.com',
-        password: 'janNowak',
+        password: 'jan',
         name:'Jan',
         surname:'Nowak',
         isAdmin: 0,
@@ -23,7 +23,7 @@ module.exports = {
       },
       {
         email: 'lenaNowak@example.com',
-        password: 'lenaNowak',
+        password: 'lena',
         name:'Lena',
         surname:'Nowak',
         isAdmin: 0,

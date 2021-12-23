@@ -16,6 +16,9 @@ class SamePerformerNameError extends Error{};
 class NotFoundSongNameError extends Error{};
 class SameSongNameError extends Error{};
 
+class NotFoundDanceGenreNameError extends Error{};
+class SameDanceGenreNameError extends Error{};
+
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
         res.status(404);
@@ -103,7 +106,22 @@ function handleError(err,req,res,next){
         });
         return;
     }
-    //
+    //danceGerne
+    if(err instanceof NotFoundDanceGenreNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono gatunku tańca o danej nazwie',
+        });
+        return;
+    }
+
+    if(err instanceof SameDanceGenreNameError){
+        res.status(400);
+        res.send({
+            message: 'Gatunek tańca o podanej nazwie już istnieje',
+        });
+        return;
+    }
 
 
 
@@ -126,5 +144,7 @@ module.exports={
     NotFoundPerformerNameError,
     SamePerformerNameError,
     NotFoundSongNameError,
-    SameSongNameError
+    SameSongNameError,
+    NotFoundDanceGenreNameError,
+    SameDanceGenreNameError
 }

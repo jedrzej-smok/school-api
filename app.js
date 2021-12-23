@@ -18,7 +18,7 @@ const {levelRouter} = require("./routes/levelRouter");
 const {roomRouter} = require("./routes/roomRouter");
 const {performerRouter} = require("./routes/performerRouter");
 const {songRouter} = require("./routes/songRouter");
-
+const {danceGenreRouter} = require("./routes/danceGenreRouter");
 
 const { userLoginRouter } = require("./routes/userLogin");
 
@@ -56,6 +56,8 @@ app.use('/admin',levelRouter);
 app.use('/admin',roomRouter);
 app.use('/admin',performerRouter);
 app.use('/admin',songRouter);
+app.use('/admin',danceGenreRouter);
+
 
 
 
