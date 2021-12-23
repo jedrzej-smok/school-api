@@ -19,6 +19,9 @@ class SameSongNameError extends Error{};
 class NotFoundDanceGenreNameError extends Error{};
 class SameDanceGenreNameError extends Error{};
 
+class NotFoundInstructorNameError extends Error{};
+class SameInstructorNameError extends Error{};
+
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
         res.status(404);
@@ -122,6 +125,22 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    //Instructor
+    if(err instanceof NotFoundInstructorNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono instruktora o wskazanej nazwie',
+        });
+        return;
+    }
+
+    if(err instanceof SameInstructorNameError){
+        res.status(400);
+        res.send({
+            message: 'Instruktor o podanej nazwie już istnieje',
+        });
+        return;
+    }
 
 
 
@@ -146,5 +165,7 @@ module.exports={
     NotFoundSongNameError,
     SameSongNameError,
     NotFoundDanceGenreNameError,
-    SameDanceGenreNameError
+    SameDanceGenreNameError,
+    NotFoundInstructorNameError,
+    SameInstructorNameError
 }

@@ -12,13 +12,15 @@ const {handleError} = require("./utils/errors");
 
 const {homeRouter} = require("./routes/home");
 const {adminRouter} = require("./routes/admin");
-const {instructorRouter} = require("./routes/instructor");
+const {instructorAccountRouter} = require("./routes/instructorAccountRouter");
 const {participantRouter} = require("./routes/participant");
 const {levelRouter} = require("./routes/levelRouter");
 const {roomRouter} = require("./routes/roomRouter");
 const {performerRouter} = require("./routes/performerRouter");
 const {songRouter} = require("./routes/songRouter");
 const {danceGenreRouter} = require("./routes/danceGenreRouter");
+const {instructorRouter} = require("./routes/instructorRouter");
+
 
 const { userLoginRouter } = require("./routes/userLogin");
 
@@ -49,7 +51,7 @@ app.use(cookieParser());
 app.use('/',homeRouter);
 app.use('/login', userLoginRouter);
 app.use('/admin', adminRouter);
-app.use('/instructor', instructorRouter);
+app.use('/instructor', instructorAccountRouter);
 app.use('/participant', participantRouter);
 
 app.use('/admin',levelRouter);
@@ -57,6 +59,8 @@ app.use('/admin',roomRouter);
 app.use('/admin',performerRouter);
 app.use('/admin',songRouter);
 app.use('/admin',danceGenreRouter);
+app.use('/admin',instructorRouter);
+
 
 
 

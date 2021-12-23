@@ -116,7 +116,7 @@ danceGenreRouter
         const {byName, name} = req.body;
         const checkDanceGenre =  await db.DanceGenre.findOne({where:{name: name}});
         // console.log(`checkDanceGenre:${checkDanceGenre}`);
-        if(checkDanceGenre){
+        if(checkDanceGenre && byName!==name){
             throw new SameDanceGenreNameError();
         }
         await db.DanceGenre.update({name: name},{
