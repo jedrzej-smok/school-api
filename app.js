@@ -13,7 +13,7 @@ const {handleError} = require("./utils/errors");
 const {homeRouter} = require("./routes/home");
 const {adminRouter} = require("./routes/admin");
 const {instructorAccountRouter} = require("./routes/instructorAccountRouter");
-const {participantRouter} = require("./routes/participant");
+const {participantAccountRouter} = require("./routes/participantAccountRouter");
 const {levelRouter} = require("./routes/levelRouter");
 const {roomRouter} = require("./routes/roomRouter");
 const {performerRouter} = require("./routes/performerRouter");
@@ -23,6 +23,7 @@ const {instructorRouter} = require("./routes/instructorRouter");
 const {instructorAndGenreRouter} = require("./routes/instructorAndGenre");
 const {courseRouter} = require("./routes/courseRouter");
 const {assignmentRouter} = require("./routes/assignmentRouter");
+const {participantRouter} = require("./routes/participantRouter");
 
 const { userLoginRouter } = require("./routes/userLogin");
 
@@ -54,7 +55,7 @@ app.use('/',homeRouter);
 app.use('/login', userLoginRouter);
 app.use('/admin', adminRouter);
 app.use('/instructor', instructorAccountRouter);
-app.use('/participant', participantRouter);
+app.use('/participant', participantAccountRouter);
 
 app.use('/admin',levelRouter);
 app.use('/admin',roomRouter);
@@ -66,6 +67,7 @@ app.use('/admin',instructorAndGenreRouter);
 
 app.use('/instructor', courseRouter);
 app.use('/instructor', assignmentRouter);
+app.use('/instructor', participantRouter);
 
 
 

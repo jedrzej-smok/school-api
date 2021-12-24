@@ -1,8 +1,8 @@
 const express = require('express');
-const participantRouter = express.Router();
+const participantAccountRouter = express.Router();
 const {checkAuth} = require("../utils/auth");
 
-participantRouter
+participantAccountRouter
     .get('/', checkAuth('participant'), (req, res) => {
         res
             .status(200)
@@ -10,5 +10,5 @@ participantRouter
     });
 
 module.exports = {
-    participantRouter,
+    participantAccountRouter: participantAccountRouter
 }

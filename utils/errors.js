@@ -27,6 +27,9 @@ class SameCourseNameError extends Error{};
 
 class NotFoundAssignmentNameError extends Error{};
 
+class NotFoundParticipantNameError extends Error{};
+class SameParticipantNameError extends Error{};
+
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
         res.status(404);
@@ -170,6 +173,22 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    //Participant
+    if(err instanceof NotFoundParticipantNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono uczestnika o wskazanej nazwie',
+        });
+        return;
+    }
+
+    if(err instanceof SameParticipantNameError){
+        res.status(400);
+        res.send({
+            message: 'Uczestnik o podanej nazwie już istnieje',
+        });
+        return;
+    }
 
 
 
@@ -199,5 +218,7 @@ module.exports={
     SameInstructorNameError,
     NotFoundCourseNameError,
     SameCourseNameError,
-    NotFoundAssignmentNameError
+    NotFoundAssignmentNameError,
+    NotFoundParticipantNameError,
+    SameParticipantNameError,
 }
