@@ -20,7 +20,7 @@ const {performerRouter} = require("./routes/performerRouter");
 const {songRouter} = require("./routes/songRouter");
 const {danceGenreRouter} = require("./routes/danceGenreRouter");
 const {instructorRouter} = require("./routes/instructorRouter");
-
+const {instructorAndGenreRouter} = require("./routes/instructorAndGenre");
 
 const { userLoginRouter } = require("./routes/userLogin");
 
@@ -60,6 +60,7 @@ app.use('/admin',performerRouter);
 app.use('/admin',songRouter);
 app.use('/admin',danceGenreRouter);
 app.use('/admin',instructorRouter);
+app.use('/admin',instructorAndGenreRouter);
 
 
 
