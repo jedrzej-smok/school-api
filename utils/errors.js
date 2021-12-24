@@ -22,6 +22,9 @@ class SameDanceGenreNameError extends Error{};
 class NotFoundInstructorNameError extends Error{};
 class SameInstructorNameError extends Error{};
 
+class NotFoundCourseNameError extends Error{};
+class SameCourseNameError extends Error{};
+
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
         res.status(404);
@@ -141,6 +144,22 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    //Course
+    if(err instanceof NotFoundCourseNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono kursu o wskazanej nazwie',
+        });
+        return;
+    }
+
+    if(err instanceof SameCourseNameError){
+        res.status(400);
+        res.send({
+            message: 'Kurs o podanej nazwie już istnieje',
+        });
+        return;
+    }
 
 
 
@@ -167,5 +186,7 @@ module.exports={
     NotFoundDanceGenreNameError,
     SameDanceGenreNameError,
     NotFoundInstructorNameError,
-    SameInstructorNameError
+    SameInstructorNameError,
+    NotFoundCourseNameError,
+    SameCourseNameError
 }
