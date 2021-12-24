@@ -34,7 +34,7 @@ instructorAndGenreRouter
             next(err);
         }
     })
-    .get('/instructorAndGenre/oneInstrcutor',checkAuth('admin'), async function(req, res, next)  {
+    .get('/instructorAndGenre/oneInstructor',checkAuth('admin'), async function(req, res, next)  {
         try{
             // song by title
             const {email} = req.body;

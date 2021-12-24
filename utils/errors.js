@@ -25,6 +25,8 @@ class SameInstructorNameError extends Error{};
 class NotFoundCourseNameError extends Error{};
 class SameCourseNameError extends Error{};
 
+class NotFoundAssignmentNameError extends Error{};
+
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
         res.status(404);
@@ -160,6 +162,14 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    //assignment
+    if(err instanceof NotFoundAssignmentNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono przypisania instruktora do kursu',
+        });
+        return;
+    }
 
 
 
@@ -188,5 +198,6 @@ module.exports={
     NotFoundInstructorNameError,
     SameInstructorNameError,
     NotFoundCourseNameError,
-    SameCourseNameError
+    SameCourseNameError,
+    NotFoundAssignmentNameError
 }

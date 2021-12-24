@@ -22,6 +22,7 @@ const {danceGenreRouter} = require("./routes/danceGenreRouter");
 const {instructorRouter} = require("./routes/instructorRouter");
 const {instructorAndGenreRouter} = require("./routes/instructorAndGenre");
 const {courseRouter} = require("./routes/courseRouter");
+const {assignmentRouter} = require("./routes/assignmentRouter");
 
 const { userLoginRouter } = require("./routes/userLogin");
 
@@ -64,11 +65,7 @@ app.use('/admin',instructorRouter);
 app.use('/admin',instructorAndGenreRouter);
 
 app.use('/instructor', courseRouter);
-
-
-
-
-
+app.use('/instructor', assignmentRouter);
 
 
 
