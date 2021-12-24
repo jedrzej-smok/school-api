@@ -105,15 +105,23 @@ performerRouter
     }
 })
 .put('/performer/:byName',checkAuth('admin'), async function(req, res, next)  {
-    const {name,musicGenre} = req.body;
-    await db.Performer.update({name: name, musicGenre: musicGenre},{
-        where:{
-            name: req.params.byName
+    try{
+        const {name,musicGenre} = req.body;
+        const checkPerformer =  await db.Performer.findOne({where:{name: name}});
+        if(checkPerformer && name !== req.params.byName){
+            throw new SamePerformerNameError();
         }
-    });
-    res
-        .status(200)
-        .send('One performer modified');
+        await db.Performer.update({name: name, musicGenre: musicGenre},{
+            where:{
+                name: req.params.byName
+            }
+        });
+        res
+            .status(200)
+            .send('One performer modified');
+    }catch(err){
+        next(err);
+    }
 })
 //delete
 .delete('/performer/:byName',checkAuth('admin'), async function(req, res, next)  {

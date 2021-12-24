@@ -152,8 +152,7 @@ songRouter
             throw new NotFoundPerformerNameError();
         }
         const checkSong =  await db.Song.findOne({where:{title: title}});
-        // console.log(`checkSong:${checkSong}`);
-        if(checkSong){
+        if(checkSong && byTitle !== title){
             throw new SameSongNameError();
         }
         await db.Song.update({title: title, source: source, performerId: performer.performerId},{

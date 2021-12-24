@@ -100,8 +100,13 @@ levelRouter
     }
 })
 .put('/level/:byName',checkAuth('admin'), async function(req, res, next)  {
-    const {name} = req.body;
-    await db.Level.update({name: name},{
+    try{
+        const {name} = req.body;
+        const checkLevel =  await db.Level.findOne({where:{name: name}});
+        if(checkLevel && name !== req.params.byName){
+            throw new SameLevelNameError();
+        }
+        await db.Level.update({name: name},{
         where:{
             name: req.params.byName
         }
@@ -109,6 +114,10 @@ levelRouter
     res
         .status(200)
         .send('One level modified');
+
+    }catch(err){
+        next(err);
+    }
 })
 //delete
 .delete('/level/:byName',checkAuth('admin'), async function(req, res, next)  {

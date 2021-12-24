@@ -106,15 +106,23 @@ roomRouter
     }
 })
 .put('/room/:byName',checkAuth('admin'), async function(req, res, next)  {
-    const {name,capacity} = req.body;
-    await db.Room.update({name: name, capacity: capacity},{
-        where:{
-            name: req.params.byName
+    try{ 
+        const {name,capacity} = req.body;
+        const checkRoom =  await db.Room.findOne({where:{name: name}});
+        if(checkRoom && name !== req.params.byName){
+            throw new SameRoomNameError();
         }
-    });
-    res
-        .status(200)
+        await db.Room.update({name: name, capacity: capacity},{
+            where:{
+                name: req.params.byName
+            }
+        });
+        res
+            .status(200)
         .send('One room modified');
+    }catch(err){
+        next(err);
+    }
 })
 //delete
 .delete('/room/:byName',checkAuth('admin'), async function(req, res, next)  {
