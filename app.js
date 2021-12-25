@@ -28,6 +28,7 @@ const {registrationRouter} = require('./routes/registrationRouter');
 const {recordingRouter} = require('./routes/recordingRouter');
 
 const { userLoginRouter } = require("./routes/userLogin");
+const {execProcedureFunctionRouter} = require("./utils/execProcedureFunction");
 
 //db connection, models synchronization
 async function createDB(){
@@ -72,6 +73,7 @@ app.use('/instructor', assignmentRouter);
 app.use('/instructor', participantRouter);
 app.use('/instructor', registrationRouter);
 app.use('/instructor', recordingRouter);
+app.use('/instructor/execute', execProcedureFunctionRouter);
 
 
 
