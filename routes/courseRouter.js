@@ -214,7 +214,7 @@ courseRouter
             level: (await course.getLevel()).name,
             danceGenre: (await course.getDanceGenre()).name
         };
-        console.log("One song to edit:", JSON.stringify(resCourse));
+        console.log("One course to edit:", JSON.stringify(resCourse));
         res
             .status(200)
             .send(JSON.stringify(resCourse));
@@ -290,7 +290,7 @@ courseRouter
         });
         res
             .status(200)
-            .send('One course modified');
+            .send({message:'1 course modified'});
 
     }catch(err){
         next(err);
@@ -305,12 +305,17 @@ courseRouter
                 name: req.body.name
             }
         });
-        
-        console.log(`${tmp} course were deleted`);
-        res
-            .status(200)
-            .send(`${tmp} course were deleted`);
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} course were deleted`});
 
+        }else{
+            res
+                .status(400)
+                .send({message:`${tmp} course were deleted, invalid name`});
+        }
+        
     }catch(err){
         console.log(err);
         next(err);

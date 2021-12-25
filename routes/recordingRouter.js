@@ -99,7 +99,7 @@ recordingRouter
             .status(200)
             .send(JSON.stringify(
                 {
-                    naem: recording.name,
+                    name: recording.name,
                     source: recording.source,
                     course: courseName
                 })

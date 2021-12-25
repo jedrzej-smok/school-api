@@ -184,6 +184,9 @@ assignmentRouter
                 },
                 attributes:['instructorId'],
             });
+            if(!instructor){
+                throw new NotFoundInstructorNameError();
+            }
             const course = await db.Course.findOne({
                 where:{
                     name: courseName
@@ -203,16 +206,24 @@ assignmentRouter
             if(!assignment){
                 throw new NotFoundAssignmentNameError();
             }
-            assignment.earnings = 1000;
-
-            await db.Assignment.update({earnings: earnings},{
+            const tmp = await db.Assignment.update({earnings: earnings},{
                 where:{
                     assignmentId: assignment.assignmentId
                 }
             });
-            res
-                .status(200)
-                .send('One song modified');
+            if(tmp>0){
+                res
+                    .status(200)
+                    .send({
+                        message: `${tmp} assignment modified`  
+                    });
+            }else{
+                res
+                    .status(400)
+                    .send({
+                        message: `${tmp} assignment modified`  
+                    });
+            }
     
         }catch(err){
             next(err);
@@ -230,6 +241,9 @@ assignmentRouter
                 },
                 attributes:['email','instructorId'],
             });
+            if(!instructor){
+                throw new NotFoundInstructorNameError();
+            }
             const course = await db.Course.findOne({
                 where:{
                     name: courseName
@@ -246,10 +260,20 @@ assignmentRouter
                 }
             });
             
-            console.log(`${tmp} assignment deleted`);
-            res
-                .status(200)
-                .send(`${tmp} assignment deleted`);
+            if(tmp>0){
+                res
+                    .status(200)
+                    .send({
+                        message: `${tmp} assignment deleted`  
+                    });
+            }else{
+                res
+                    .status(400)
+                    .send({
+                        message: `${tmp} assignment deleted`  
+                    });
+            }
+            
 
             
         }catch(err){
