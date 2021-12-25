@@ -149,11 +149,17 @@ instructorRouter
                 email: req.body.email
             }
         });
-        
+        if(deleted>0){
+            res
+                .status(200)
+                .send({message:`deleted ${deleted} instructors`});
+
+        }else{
+            res
+                .status(400)
+                .send({message:`deleted ${deleted} instructors, invalid email`});
+        }
         console.log(`deleted ${deleted} instructors`);
-        res
-            .status(200)
-            .send(`deleted ${deleted} instructors`);
 
     }catch(err){
         console.log(err);

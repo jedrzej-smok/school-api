@@ -119,14 +119,21 @@ danceGenreRouter
         if(checkDanceGenre && byName!==name){
             throw new SameDanceGenreNameError();
         }
-        await db.DanceGenre.update({name: name},{
+        const tmp = await db.DanceGenre.update({name: name},{
             where:{
                 name: byName
             }
         });
-        res
-            .status(200)
-            .send('One danceGenre modified');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} danceGenre were modified`});
+
+        }else{
+            res
+                .status(400)
+                .send({message:`${tmp} course were modified, invalid name`});
+        }
 
     }catch(err){
         next(err);
@@ -136,16 +143,21 @@ danceGenreRouter
 .delete('/danceGenre',checkAuth('admin'), async function(req, res, next)  {
     try{
         // danceGenre by name
-        await db.DanceGenre.destroy({
+        const tmp = await db.DanceGenre.destroy({
             where:{
                 name: req.body.name
             }
         });
-        
-        console.log("One danceGenre deleted:");
-        res
-            .status(200)
-            .send('danceGerne deleted');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} danceGenre were deleted`});
+
+        }else{
+            res
+                .status(400)
+                .send({message:`${tmp} course were deleted, invalid name`});
+        }
 
     }catch(err){
         console.log(err);

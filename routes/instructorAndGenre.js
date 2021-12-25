@@ -167,10 +167,16 @@ instructorAndGenreRouter
             }
             const tmp = await instructor.removeDanceGenre(danceGenre);
             console.log("danceGenre deleted from instrcutor: " ,tmp);
-            res
-                .status(200)
-                .send(`${tmp} danceGenre were removed from the instrcutor:`);
-
+            if(tmp>0){
+                res
+                    .status(200)
+                    .send({message:`${tmp} danceGenre were removed from the instrcutor:`});
+    
+            }else{
+                res
+                    .status(400)
+                    .send({message:`${tmp} danceGenre were removed, invalid name`});
+            }
             
         }catch(err){
             next(err);
