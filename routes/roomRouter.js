@@ -112,14 +112,22 @@ roomRouter
         if(checkRoom && name !== req.params.byName){
             throw new SameRoomNameError();
         }
-        await db.Room.update({name: name, capacity: capacity},{
+        const tmp = await db.Room.update({name: name, capacity: capacity},{
             where:{
                 name: req.params.byName
             }
         });
-        res
-            .status(200)
-        .send('One room modified');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} room were modified`});
+
+        }else{
+            res
+                .status(404)
+                .send({message:`${tmp} room were modified, invalid name`});
+        }
+        
     }catch(err){
         next(err);
     }
@@ -128,16 +136,21 @@ roomRouter
 .delete('/room/:byName',checkAuth('admin'), async function(req, res, next)  {
     try{
         // room by name
-        await db.Room.destroy({
+        const tmp = await db.Room.destroy({
             where:{
                 name: req.params.byName
             }
         });
-        
-        console.log("One room deleted:");
-        res
-            .status(200)
-            .send('Room deleted');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} rooms were deleted`});
+
+        }else{
+            res
+                .status(404)
+                .send({message:`${tmp} rooms were deleted, invalid name`});
+        }
 
     }catch(err){
         console.log(err);

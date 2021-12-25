@@ -184,7 +184,7 @@ recordingRouter
                 });
         }else{
             res
-                .status(400)
+                .status(404)
                 .send({
                     message:`${tmp} recording modified, Invalid recordingId`
                 });
@@ -211,7 +211,7 @@ recordingRouter
                 });
         }else{
             res
-                .status(400)
+                .status(404)
                 .send({
                     message:`${tmp} recording deleted, Invalid recordingId`
                 });

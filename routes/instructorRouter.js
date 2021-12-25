@@ -127,14 +127,22 @@ instructorRouter
         if(checkInstructor && email!==byEmail){
             throw new SameInstructorNameError();
         }
-        await db.Instructor.update({email: email, password:password, name:name, surname:surname, isAdmin:isAdmin},{
+        const tmp = await db.Instructor.update({email: email, password:password, name:name, surname:surname, isAdmin:isAdmin},{
             where:{
                 email: byEmail
             }
         });
-        res
-            .status(200)
-            .send('One instructor modified');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} instructor modified`});
+
+        }else{
+            res
+                .status(404)
+                .send({message:`${tmp} instructor modified, invalid email`});
+        }
+        
 
     }catch(err){
         next(err);
@@ -156,7 +164,7 @@ instructorRouter
 
         }else{
             res
-                .status(400)
+                .status(404)
                 .send({message:`deleted ${deleted} instructors, invalid email`});
         }
         console.log(`deleted ${deleted} instructors`);

@@ -148,14 +148,21 @@ participantRouter
          if(countParticpant||countInstructor){
              throw new SameParticipantNameError();
          }
-        await db.Participant.update({email: email, password:password, name:name, surname:surname},{
+        const tmp = await db.Participant.update({email: email, password:password, name:name, surname:surname},{
             where:{
                 email: byEmail
             }
         });
-        res
-            .status(200)
-            .send('One participant modified');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} participant modified`});
+
+        }else{
+            res
+                .status(404)
+                .send({message:`${tmp} participant modified, invalid email`});
+        }
 
     }catch(err){
         next(err);
@@ -170,11 +177,16 @@ participantRouter
                 email: req.body.email
             }
         });
+        if(deleted>0){
+            res
+                .status(200)
+                .send({message:`deleted ${deleted} participant`});
+        }else{
+            res
+                .status(404)
+                .send({message:`deleted ${deleted} participant,invalid email`});
+        }
         
-        console.log(`deleted ${deleted} participants`);
-        res
-            .status(200)
-            .send(`deleted ${deleted} participants`);
 
     }catch(err){
         console.log(err);

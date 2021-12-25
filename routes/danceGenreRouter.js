@@ -131,7 +131,7 @@ danceGenreRouter
 
         }else{
             res
-                .status(400)
+                .status(404)
                 .send({message:`${tmp} course were modified, invalid name`});
         }
 
@@ -155,7 +155,7 @@ danceGenreRouter
 
         }else{
             res
-                .status(400)
+                .status(404)
                 .send({message:`${tmp} course were deleted, invalid name`});
         }
 

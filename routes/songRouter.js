@@ -155,14 +155,22 @@ songRouter
         if(checkSong && byTitle !== title){
             throw new SameSongNameError();
         }
-        await db.Song.update({title: title, source: source, performerId: performer.performerId},{
+        const tmp = await db.Song.update({title: title, source: source, performerId: performer.performerId},{
             where:{
                 title: byTitle
             }
         });
-        res
-            .status(200)
-            .send('One song modified');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} songs were modified`});
+
+        }else{
+            res
+                .status(404)
+                .send({message:`${tmp} songs were modified, invalid name`});
+        }
+        
 
     }catch(err){
         next(err);
@@ -172,16 +180,21 @@ songRouter
 .delete('/song',checkAuth('admin'), async function(req, res, next)  {
     try{
         // song by title
-        await db.Song.destroy({
+        const tmp = await db.Song.destroy({
             where:{
                 title: req.body.title
             }
         });
-        
-        console.log("One song deleted:");
-        res
-            .status(200)
-            .send('song deleted');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} songs were deleted`});
+
+        }else{
+            res
+                .status(404)
+                .send({message:`${tmp} songs were deleted, invalid name`});
+        }
 
     }catch(err){
         console.log(err);

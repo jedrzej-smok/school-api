@@ -273,7 +273,7 @@ courseRouter
         if(checkCourse && byName !== name){
             throw new SameCourseNameError();
         }
-        await db.Course.update({
+        const tmp = await db.Course.update({
             name: name,
             price: price,
             numberClasses: numberClasses,
@@ -288,9 +288,17 @@ courseRouter
                 name: byName
             }
         });
-        res
-            .status(200)
-            .send({message:'1 course modified'});
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} courses were modified`});
+
+        }else{
+            res
+                .status(404)
+                .send({message:`${tmp} courses were modified, invalid name`});
+        }
+        
 
     }catch(err){
         next(err);
@@ -312,7 +320,7 @@ courseRouter
 
         }else{
             res
-                .status(400)
+                .status(404)
                 .send({message:`${tmp} course were deleted, invalid name`});
         }
         

@@ -219,7 +219,7 @@ assignmentRouter
                     });
             }else{
                 res
-                    .status(400)
+                    .status(404)
                     .send({
                         message: `${tmp} assignment modified`  
                     });
@@ -268,7 +268,7 @@ assignmentRouter
                     });
             }else{
                 res
-                    .status(400)
+                    .status(404)
                     .send({
                         message: `${tmp} assignment deleted`  
                     });

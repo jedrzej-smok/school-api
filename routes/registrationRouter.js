@@ -194,11 +194,11 @@ registrationRouter
             if(tmp>0){
                 res
                     .status(200)
-                    .send(`${tmp} registration modified`);
+                    .send({message:`${tmp} registration modified`});
             }else{
                 res
-                    .status(400)
-                    .send(`${tmp} registration modified, Invalid registerId`);
+                    .status(404)
+                    .send({message:`${tmp} registration modified, Invalid registerId`});
             }
             
     
@@ -221,11 +221,11 @@ registrationRouter
             if(tmp>0){
                 res
                     .status(200)
-                    .send(`${tmp} registration deleted`);
+                    .send({message:`${tmp} registration deleted`});
             }else{
                 res
-                    .status(400)
-                    .send(`${tmp} registration deleted, Invalid registerId`);
+                    .status(404)
+                    .send({message:`${tmp} registration deleted, Invalid registerId`});
             }
             
         }catch(err){

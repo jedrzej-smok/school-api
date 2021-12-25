@@ -174,7 +174,7 @@ instructorAndGenreRouter
     
             }else{
                 res
-                    .status(400)
+                    .status(404)
                     .send({message:`${tmp} danceGenre were removed, invalid name`});
             }
             

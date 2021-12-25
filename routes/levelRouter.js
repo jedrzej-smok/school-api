@@ -106,15 +106,21 @@ levelRouter
         if(checkLevel && name !== req.params.byName){
             throw new SameLevelNameError();
         }
-        await db.Level.update({name: name},{
-        where:{
-            name: req.params.byName
-        }
-    });
-    res
-        .status(200)
-        .send('One level modified');
+        const tmp = await db.Level.update({name: name},{
+            where:{
+                name: req.params.byName
+            }
+        });
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} level modified`});
 
+        }else{
+            res
+                .status(404)
+                .send({message:`deleted ${tmp} level modified, invalid name`});
+        }
     }catch(err){
         next(err);
     }
@@ -123,16 +129,21 @@ levelRouter
 .delete('/level/:byName',checkAuth('admin'), async function(req, res, next)  {
     try{
         // level by name
-        await db.Level.destroy({
+        const tmp = await db.Level.destroy({
             where:{
                 name: req.params.byName
             }
         });
-        
-        console.log("One level deleted:");
-        res
-            .status(200)
-            .send('Level deleted');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message:`${tmp} level deleted`});
+
+        }else{
+            res
+                .status(404)
+                .send({message:`deleted ${tmp} level deleted, invalid name`});
+        }
 
     }catch(err){
         console.log(err);

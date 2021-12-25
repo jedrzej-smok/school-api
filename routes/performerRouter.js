@@ -111,14 +111,21 @@ performerRouter
         if(checkPerformer && name !== req.params.byName){
             throw new SamePerformerNameError();
         }
-        await db.Performer.update({name: name, musicGenre: musicGenre},{
+        const tmp = await db.Performer.update({name: name, musicGenre: musicGenre},{
             where:{
                 name: req.params.byName
             }
         });
-        res
-            .status(200)
-            .send('One performer modified');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message: `${tmp} performer modified`});
+        }else{
+            res
+                .status(404)
+                .send({message: `${tmp} performer modified, invalid name`});
+        }
+        
     }catch(err){
         next(err);
     }
@@ -127,16 +134,22 @@ performerRouter
 .delete('/performer/:byName',checkAuth('admin'), async function(req, res, next)  {
     try{
         // performer by name
-        await db.Performer.destroy({
+        const tmp = await db.Performer.destroy({
             where:{
                 name: req.params.byName
             }
         });
         
-        console.log("One performer deleted:");
-        res
-            .status(200)
-            .send('performer deleted');
+        if(tmp>0){
+            res
+                .status(200)
+                .send({message: `${tmp} performer deleted`});
+        }else{
+            res
+                .status(404)
+                .send({message: `${tmp} performer deleted, invalid name`});
+        }
+        
 
     }catch(err){
         console.log(err);
