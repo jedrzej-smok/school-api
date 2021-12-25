@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Participants',[
       {
         email: 'igaMazur@example.com',
-        password: 'igaMazur',
+        password: 'iga',
         name:'Iga',
         surname:'Mazur',
         createdAt: new Date(),
@@ -13,15 +13,15 @@ module.exports = {
       },
       {
         email: 'igorMazur@example.com',
-        password: 'igorMazur',
-        name:'Laura',
+        password: 'igor',
+        name:'Igor',
         surname:'Mazur',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         email: 'lauraMazur@example.com',
-        password: 'lauraMazur',
+        password: 'laura',
         name:'Laura',
         surname:'Mazur',
         createdAt: new Date(),
@@ -29,7 +29,7 @@ module.exports = {
       },
       {
         email: 'leonMazur@example.com',
-        password: 'lauraMazur',
+        password: 'leon',
         name:'Leon',
         surname:'Mazur',
         createdAt: new Date(),

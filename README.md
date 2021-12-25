@@ -43,3 +43,14 @@ npx sequelize-cli model:generate --name Assignment --attributes earnings:double
 # create seeds
 npx sequelize-cli seed:generate --name demo-instructor
 npx sequelize-cli db:seed:all
+
+# to drop and recreated db
+uncomment line in app.js: 
+    await db.sequelize.sync({ force: true });
+run command in terminal: 
+    npx sequelize-cli db:seed:all
+
+# installation for app
+npm install method-override
+npm install cookie-parser
+

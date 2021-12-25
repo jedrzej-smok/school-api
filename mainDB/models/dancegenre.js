@@ -32,11 +32,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     name:  {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      unique:true
     }
   }, {
     sequelize,
     modelName: 'DanceGenre',
+    indexes:[
+      {
+        name: 'indexDanceGenre',
+        using: 'BTREE',
+        fields:['name']
+      }
+    ]
   });
   return DanceGenre;
 };

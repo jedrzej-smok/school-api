@@ -81,7 +81,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      unique:true
     },
     price: {
       allowNull:false,
@@ -102,6 +103,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Course',
+    indexes:[
+      {
+        name: 'indexCourse',
+        using: 'BTREE',
+        fields:['name']
+      }
+    ]
   });
   return Course;
 };

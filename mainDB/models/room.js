@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      unique:true
     },
     capacity: {
       allowNull: false,
@@ -36,6 +37,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Room',
+    indexes:[
+      {
+        name: 'indexRoom',
+        using: 'BTREE',
+        fields:['name']
+      }
+    ]
   });
   return Room;
 };

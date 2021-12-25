@@ -59,6 +59,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Participant',
+    indexes:[
+      {
+        name: 'indexParticipant',
+        using: 'BTREE',
+        fields:['email']
+      }
+    ]
   });
   return Participant;
 };

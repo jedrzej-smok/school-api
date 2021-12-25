@@ -27,11 +27,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      unique:true
     }
   }, {
     sequelize,
     modelName: 'Level',
+    indexes:[
+      {
+        name: 'indexLevel',
+        using: 'BTREE',
+        fields:['name']
+      }
+    ]
   });
   return Level;
 };

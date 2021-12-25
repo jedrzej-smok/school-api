@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     name:{
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      unique:true
     },
     musicGenre: {
       allowNull: true,
@@ -39,6 +40,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Performer',
+    indexes:[
+      {
+        name: 'indexPerformer',
+        using: 'BTREE',
+        fields:['name']
+      }
+    ]
   });
   return Performer;
 };

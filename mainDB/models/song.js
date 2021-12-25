@@ -36,7 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      unique:true
     },
     source: {
       allowNull: false,
@@ -45,6 +46,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Song',
+    indexes:[
+      {
+        name: 'indexSong',
+        using: 'BTREE',
+        fields:['title']
+      }
+    ]
   });
   return Song;
 };
