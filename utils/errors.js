@@ -30,6 +30,9 @@ class NotFoundAssignmentNameError extends Error{};
 class NotFoundParticipantNameError extends Error{};
 class SameParticipantNameError extends Error{};
 
+class NotFoundRegistrationNameError extends Error{};
+
+
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
         res.status(404);
@@ -173,6 +176,14 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    //registration
+    if(err instanceof NotFoundRegistrationNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono rejestracji uczestnika do kursu',
+        });
+        return;
+    }
     //Participant
     if(err instanceof NotFoundParticipantNameError){
         res.status(404);
@@ -221,4 +232,5 @@ module.exports={
     NotFoundAssignmentNameError,
     NotFoundParticipantNameError,
     SameParticipantNameError,
+    NotFoundRegistrationNameError,
 }

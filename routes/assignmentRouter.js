@@ -1,11 +1,11 @@
 const express = require('express');
-const instructorAndGenreRouter = express.Router();
+const assignmentRouter = express.Router();
 const { Sequelize, Op, Model, DataTypes, where } = require("sequelize");
 const db = require("../mainDB/models/index");
 const {NotFoundInstructorNameError, NotFoundCourseNameError, NotFoundAssignmentNameError} = require("../utils/errors");
 const {checkAuth} = require("../utils/auth");
 
-instructorAndGenreRouter
+assignmentRouter
     //read
     .get('/assignment',checkAuth('instructor'), async function(req, res, next)  {
         try{
@@ -77,6 +77,9 @@ instructorAndGenreRouter
                 },
                 attributes:['email','instructorId'],
             });
+            if(!instructor){
+                throw new NotFoundInstructorNameError();
+            }
             const course = await db.Course.findOne({
                 where:{
                     name: courseName
@@ -133,6 +136,9 @@ instructorAndGenreRouter
                 },
                 attributes:['email','instructorId'],
             });
+            if(!instructor){
+                throw new NotFoundInstructorNameError();
+            }
             const course = await db.Course.findOne({
                 where:{
                     name: courseName
@@ -216,7 +222,7 @@ instructorAndGenreRouter
     .delete('/assignment',checkAuth('instructor'), async function(req, res, next)  {
         try{
             
-            //instructorAndGenre create
+            
             const {instructorEmail, courseName} = req.body;
             const instructor = await db.Instructor.findOne({
                 where:{
@@ -252,5 +258,5 @@ instructorAndGenreRouter
     })
 
 module.exports = {
-    assignmentRouter: instructorAndGenreRouter,
+    assignmentRouter: assignmentRouter,
 }

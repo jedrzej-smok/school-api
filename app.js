@@ -24,6 +24,7 @@ const {instructorAndGenreRouter} = require("./routes/instructorAndGenre");
 const {courseRouter} = require("./routes/courseRouter");
 const {assignmentRouter} = require("./routes/assignmentRouter");
 const {participantRouter} = require("./routes/participantRouter");
+const {registrationRouter} = require('./routes/registrationRouter');
 
 const { userLoginRouter } = require("./routes/userLogin");
 
@@ -68,8 +69,7 @@ app.use('/admin',instructorAndGenreRouter);
 app.use('/instructor', courseRouter);
 app.use('/instructor', assignmentRouter);
 app.use('/instructor', participantRouter);
-
-
+app.use('/instructor', registrationRouter);
 
 
 
