@@ -67,6 +67,39 @@ registrationRouter
             next(err);
         }
     })
+    .get('/registration/oneCourse',checkAuth('instructor'), async function(req, res, next)  {
+        try{
+            // registration by course
+
+            const course = await db.Course.findOne({
+                where:{
+                    name: req.body.name
+                },
+                attributes:['name','courseId']
+            });
+            if(!course){
+                throw new NotFoundCourseNameError();
+            }
+            const registrations = await course.getRegistrations();
+            const resRegistrations = await Promise.all(registrations.map(async (registration)=>{
+                    return {
+                        participant:(await registration.getParticipant()).email,
+                        attendance: registration.attendance,
+                        registrationId: registration.registrationId
+                    };
+                })
+            );
+            
+            console.log("All course's registrations:", JSON.stringify(resRegistrations));
+            res
+                .status(200)
+                .send(JSON.stringify(resRegistrations));
+
+        }catch(err){
+            console.log(err);
+            next(err);
+        }
+    })
     
     //create, more add
     .get('/registration/form/add',checkAuth('instructor'), async function(req, res, next){
