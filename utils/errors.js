@@ -32,6 +32,8 @@ class SameParticipantNameError extends Error{};
 
 class NotFoundRegistrationNameError extends Error{};
 
+class NotFoundRecordingNameError extends Error{};
+class SameRecordingNameError extends Error{};
 
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
@@ -184,6 +186,21 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    //recording
+    if(err instanceof NotFoundRecordingNameError){
+        res.status(404);
+        res.send({
+            message: 'Nie znaleziono nagrania do kursu',
+        });
+        return;
+    }
+    if(err instanceof SameRecordingNameError){
+        res.status(400);
+        res.send({
+            message: 'Nagranie o podanej nazwie już istnieje dla tego kursu',
+        });
+        return;
+    }
     //Participant
     if(err instanceof NotFoundParticipantNameError){
         res.status(404);
@@ -233,4 +250,6 @@ module.exports={
     NotFoundParticipantNameError,
     SameParticipantNameError,
     NotFoundRegistrationNameError,
+    NotFoundRecordingNameError,
+    SameRecordingNameError
 }
