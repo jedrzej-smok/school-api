@@ -44,7 +44,7 @@ userLoginRouter
             }
             res.cookie("userId", userId);
             res.cookie("role", role);
-            res.send('Logged in');
+            res.send({message:'Logged in'});
         
         } catch(err){
            next(err);
@@ -56,7 +56,7 @@ userLoginRouter
             .clearCookie("userdId")
             .cookie("role", "guest")
             .status(200)
-            .send('Logged out');
+            .send({message:'Logged out'});
     });
 module.exports = {
     userLoginRouter,

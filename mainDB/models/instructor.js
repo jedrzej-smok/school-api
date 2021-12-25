@@ -69,6 +69,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Instructor',
+    indexes:[
+      {
+        name: 'indexInstructor',
+        using: 'BTREE',
+        fields:['email']
+      }
+    ]
   });
   return Instructor;
 };

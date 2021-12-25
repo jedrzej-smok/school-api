@@ -40,6 +40,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Performer',
+    indexes:[
+      {
+        name: 'indexPerformer',
+        using: 'BTREE',
+        fields:['name']
+      }
+    ]
   });
   return Performer;
 };

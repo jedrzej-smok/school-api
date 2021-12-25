@@ -33,6 +33,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Level',
+    indexes:[
+      {
+        name: 'indexLevel',
+        using: 'BTREE',
+        fields:['name']
+      }
+    ]
   });
   return Level;
 };
