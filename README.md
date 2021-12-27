@@ -24,7 +24,7 @@
     > node createDbJson.js
 
 7. Install required packages:
-    > npm i
+    > npm install
 
 # Configure and run database 
 8. Before first starting application run Xampp Control Panel and start Apache and MySql.
