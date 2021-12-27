@@ -82,8 +82,8 @@ app.use(handleError);
 //listen
 createDB()
     .then(()=>{
-        app.listen(3000, 'localhost', () => {
-            console.log('Listening danceSchool on http://localhost:3000');
+        app.listen(process.env.PORT||3000, 'localhost', () => {
+            console.log(`Listening danceSchool on http://localhost:${process.env.PORT||3000}`);
         });
     })
     .catch((e) => console.log(e));

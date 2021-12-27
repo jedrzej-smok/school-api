@@ -1,56 +1,21 @@
 # projektZBD
-# start
-npm init -y
-npm install --save mysql2
-npm install --save express
-npm i dotenv
-create .env
-npm install sequelize-cli -g
-npm install --save sequelize
-cd db
-    -npx sequelize-cli init
-move db/conifg as ./config/database.json
-create .sequelizerc
-# create orm models
-npx sequelize-cli db:create  - tworzy baza zapisana w database.json
 
-npx sequelize-cli model:generate --name Instructor --attributes instructorId:integer,email:string,password:string,name:string,surname:string,isAdmin:integer
-
-npx sequelize-cli model:generate --name Participant --attributes participantId:integer,email:string,password:string,name:string,surname:string
-
-npx sequelize-cli model:generate --name Performer --attributes performerId:integer,name:string,musicGenre:string
-
-npx sequelize-cli model:generate --name Song --attributes songId:integer,title:string,source:string
-
-
-npx sequelize-cli model:generate --name Level --attributes levelId:integer,name:string
-
-npx sequelize-cli model:generate --name Room --attributes roomId:integer,capacity:integer
-
-npx sequelize-cli model:generate --name  DanceGenre --attributes DanceGenreId:integer,name:string
-
-npx sequelize-cli model:generate --name  InstructorDanceGenres --attributes id:integer
-
-npx sequelize-cli model:generate --name Course --attributes name:string,price:double,source:string,numberClasses:integer,startTime:date,requirements:string
-
-npx sequelize-cli model:generate --name Recording --attributes danceRecordingId:integer,name:string,source:string
-
-npx sequelize-cli model:generate --name Registration --attributes attendance:integer 
-
-npx sequelize-cli model:generate --name Assignment --attributes earnings:double
-
-# ORM was created
-# create seeds
-npx sequelize-cli seed:generate --name demo-instructor
-npx sequelize-cli db:seed:all
-
-# to drop and recreated db
-uncomment line in app.js: 
-    await db.sequelize.sync({ force: true });
-run command in terminal: 
-    npx sequelize-cli db:seed:all
-
-# installation for app
-npm install method-override
-npm install cookie-parser
+# First configuartion
+1. Download and install Node.js, NPM and Xampp.
+2. Run Xampp Control Panel
+    - start Apache
+    - start MySql
+3. Open http://localhost/phpmyadmin/ and select menu option databases
+    - create database *your_db_name*
+4. Clone project and open projektZBD
+> git clone https://github.com/jedrzejSmok/projektZBD.git
+> cd projektZBD
+5. Create **.env** file with content:
+PORT=*your_port*
+DB_HOST=*your_db_host*
+DB_USER=*your_db_username*
+DB_PASSWORD=*your_db_password*
+DB_NAME=*your_db_name*
+6. Install required packages:
+> npm i
 
