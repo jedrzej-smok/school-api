@@ -32,9 +32,9 @@
 7. Install required packages:
     > npm install
 
-# Run application 
+# Run the application 
 1. Before first starting application run Xampp Control Panel and start Apache and MySql.
-2. Optional to clean database run scripta and recreate exampled content:
+2. Optional to clean database run script and recreate exampled content:
     > node cleanDb.js
 3. After last closing application run Xampp Control Panel and stop Apache and MySql.
 
