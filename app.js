@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const express = require('express');
-// const hbs = require('express-handlebars');
+
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser')
 
@@ -33,12 +33,12 @@ const {execProcedureFunctionRouter} = require("./utils/execProcedureFunction");
 //db connection, models synchronization
 async function createDB(){
     const testDB = await testDBconnection(db);
-    const syncDB = await db.sequelize.sync(/*{force:true}*/);
+    const syncDB = await db.sequelize.sync();
     await Promise.all([testDB,syncDB]);
     console.log("All models were synchronized successfully.");
 };
 
-console.log(typeof createDB);
+
 
 //app conifig___________________________________________________________________________________________________________________
 const app = express();
@@ -46,7 +46,7 @@ app.use(methodOverride('_method'));
 app.use(express.urlencoded({
     extended: true,
 }));
-app.use(express.static('public'));
+app.use(express.static('../DanceSchool'));
 app.use(express.json());
 app.use(cookieParser());
 

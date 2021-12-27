@@ -1,4 +1,5 @@
 require('dotenv').config()
+const { exec } = require("child_process");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const express = require('express');
 // const hbs = require('express-handlebars');
@@ -8,6 +9,7 @@ const cookieParser = require('cookie-parser')
 //local requires
 const db = require("./mainDB/models/index");
 const {testDBconnection} = require("./test");
+const { stderr } = require('process');
 
 //db connection, models synchronization
 async function createDB(){
@@ -21,6 +23,17 @@ async function createDB(){
 createDB()
     .then(()=>{
         console.log('DB was cleaned');
+        exec("npx sequelize-cli db:seed:all",(error, stdout,stderr)=>{
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return 1;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                return;
+            }
+            console.log('DB was recreated...');
+        })
     })
     .catch((e) => console.log(e));
 

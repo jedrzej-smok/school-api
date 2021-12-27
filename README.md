@@ -30,8 +30,6 @@
 8. Before first starting application run Xampp Control Panel and start Apache and MySql.
 9. Optional to clean database run scripta and recreate exampled content:
     > node cleanDb.js
-
-    > npx sequelize-cli db:seed:all
 10. After last closing application run Xampp Control Panel and stop Apache and MySql.
 
 # Appliaction

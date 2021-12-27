@@ -10,7 +10,8 @@ homeRouter
         res
             .cookie('role','guest')
             .status(200)
-            .send('Strona główna');
+            // .redirect('/main.html');
+            .sendFile('main.html', {root:"../DanceSchool"});
     })
     .get('/course',checkAuth('guest'), async function(req, res, next)  {
         try{
