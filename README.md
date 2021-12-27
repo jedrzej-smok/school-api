@@ -5,8 +5,14 @@
 2. Run Xampp Control Panel
     - start Apache
     - start MySql
-3. Open http://localhost/phpmyadmin/ and select menu option databases
+3. Open http://localhost/phpmyadmin/ 
+    - select menu option databases
     - create database *your_db_name*
+    - select and open created  already database *your_db_name* 
+    - select menu option sql
+    - paste sql query contained in **projektZBD/utils/procedureFunction.sql**
+    - execute it 
+
 4. Clone project and open projektZBD
     > git clone https://github.com/jedrzejSmok/projektZBD.git
 
@@ -26,12 +32,11 @@
 7. Install required packages:
     > npm i
 
-# Configure and run database 
-8. Before first starting application run Xampp Control Panel and start Apache and MySql.
-9. Optional to clean database run scripta and recreate exampled content:
+# Run application 
+1. Before first starting application run Xampp Control Panel and start Apache and MySql.
+2. Optional to clean database run scripta and recreate exampled content:
     > node cleanDb.js
-10. After last closing application run Xampp Control Panel and stop Apache and MySql.
+3. After last closing application run Xampp Control Panel and stop Apache and MySql.
 
-# Appliaction
-11. Run the application 
+4. Run the application 
     > node app.js
