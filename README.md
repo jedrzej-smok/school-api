@@ -26,11 +26,13 @@
     DB_NAME=<your_db_name>
     ```
 
-6. Run script creating configDatabase.json
+6. Install required packages:
+    > npm install
+
+7. Run script creating configDatabase.json
     > node createDbJson.js
 
-7. Install required packages:
-    > npm install
+
 
 # Run the application 
 1. Before first starting application run Xampp Control Panel and start Apache and MySql.
