@@ -20,7 +20,7 @@ async function query(sql, params) {
 }
 
 execProcedureFunctionRouter
-    .get('/procedure', checkAuth('instructor'), async (req, res) => {
+    .post('/procedure', checkAuth('instructor'), async (req, res) => {
         const course = await db.Course.findOne({
             where:{
                 name: req.body.name

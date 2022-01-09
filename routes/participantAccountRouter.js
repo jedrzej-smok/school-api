@@ -64,7 +64,7 @@ participantAccountRouter
             next(err);
         }
     })
-    .get('/course/one/',checkAuth('participant'), async function(req, res, next)  {
+    .post('/course/one/',checkAuth('participant'), async function(req, res, next)  {
         try{
             const {byName} = req.body;
             const course = await db.Course.findOne({
@@ -123,7 +123,7 @@ participantAccountRouter
             next(err);
         }
     })
-    .get('/course/recording/',checkAuth('participant'), async function(req, res, next)  {
+    .post('/course/recording/',checkAuth('participant'), async function(req, res, next)  {
         try{
             const {byName} = req.body;
             const course = await db.Course.findOne({

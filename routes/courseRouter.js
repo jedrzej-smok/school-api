@@ -25,7 +25,7 @@ courseRouter
         next(err);
     }
 })
-.get('/course/one',checkAuth('instructor'), async function(req, res, next)  {
+.post('/course/one',checkAuth('instructor'), async function(req, res, next)  {
     try{
         const {byName} = req.body;
         const course = await db.Course.findOne({
@@ -187,7 +187,7 @@ courseRouter
     
 })
 //update
-.get('/course/form/edit',checkAuth('instructor'), async function(req, res, next){
+.post('/course/form/edit',checkAuth('instructor'), async function(req, res, next){
     try{
         // course by name
         const {byName} = req.body;

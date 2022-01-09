@@ -33,7 +33,7 @@ recordingRouter
         next(err);
     }
 })
-.get('/recording/oneCourse',checkAuth('instructor'), async function(req, res, next)  {
+.post('/recording/oneCourse',checkAuth('instructor'), async function(req, res, next)  {
     try{
         //  course's recordings 
         const {name} = req.body;
@@ -110,7 +110,7 @@ recordingRouter
     
 })
 //update
-.get('/recording/form/edit',checkAuth('instructor'), async function(req, res, next){
+.post('/recording/form/edit',checkAuth('instructor'), async function(req, res, next){
     try{
         // recording by title
         const {recordingName, courseName} = req.body;

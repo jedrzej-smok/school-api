@@ -32,7 +32,7 @@ songRouter
         next(err);
     }
 })
-.get('/song/one',checkAuth('admin'), async function(req, res, next)  {
+.post('/song/one',checkAuth('admin'), async function(req, res, next)  {
     try{
         // song by title
         const {title} = req.body;
@@ -110,7 +110,7 @@ songRouter
     
 })
 //update
-.get('/song/form/edit',checkAuth('admin'), async function(req, res, next){
+.post('/song/form/edit',checkAuth('admin'), async function(req, res, next){
     try{
         // song by title
         const {title} = req.body;

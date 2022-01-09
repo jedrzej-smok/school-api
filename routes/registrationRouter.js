@@ -34,7 +34,7 @@ registrationRouter
             next(err);
         }
     })
-    .get('/registration/oneParticipant',checkAuth('instructor'), async function(req, res, next)  {
+    .post('/registration/oneParticipant',checkAuth('instructor'), async function(req, res, next)  {
         try{
             // registration by participant
 
@@ -67,7 +67,7 @@ registrationRouter
             next(err);
         }
     })
-    .get('/registration/oneCourse',checkAuth('instructor'), async function(req, res, next)  {
+    .post('/registration/oneCourse',checkAuth('instructor'), async function(req, res, next)  {
         try{
             // registration by course
 
@@ -165,7 +165,7 @@ registrationRouter
 
     })
     //update
-    .get('/registration/form/edit',checkAuth('instructor'), async function(req, res, next){
+    .post('/registration/form/edit',checkAuth('instructor'), async function(req, res, next){
        
         try{
             const {participantEmail, courseName} = req.body;

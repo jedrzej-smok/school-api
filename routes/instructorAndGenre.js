@@ -34,7 +34,7 @@ instructorAndGenreRouter
             next(err);
         }
     })
-    .get('/instructorAndGenre/oneInstructor',checkAuth('admin'), async function(req, res, next)  {
+    .post('/instructorAndGenre/oneInstructor',checkAuth('admin'), async function(req, res, next)  {
         try{
             // song by title
             const {email} = req.body;
@@ -65,7 +65,7 @@ instructorAndGenreRouter
             next(err);
         }
     })
-    .get('/instructorAndGenre/oneDanceGenre',checkAuth('admin'), async function(req, res, next)  {
+    .post('/instructorAndGenre/oneDanceGenre',checkAuth('admin'), async function(req, res, next)  {
         try{
             // song by title
             const {name} = req.body;

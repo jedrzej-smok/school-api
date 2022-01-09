@@ -26,7 +26,7 @@ instructorRouter
         next(err);
     }
 })
-.get('/instructor/one',checkAuth('admin'), async function(req, res, next)  {
+.post('/instructor/one',checkAuth('admin'), async function(req, res, next)  {
     try{
         // instructor by email
         const {email} = req.body;
@@ -94,7 +94,7 @@ instructorRouter
     
 })
 //update
-.get('/instructor/form/edit',checkAuth('admin'), async function(req, res, next){
+.post('/instructor/form/edit',checkAuth('admin'), async function(req, res, next){
     try{
         // instructor by email
         const {email} = req.body;

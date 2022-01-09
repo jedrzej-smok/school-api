@@ -26,7 +26,7 @@ danceGenreRouter
         next(err);
     }
 })
-.get('/danceGenre/one',checkAuth('admin'), async function(req, res, next)  {
+.post('/danceGenre/one',checkAuth('admin'), async function(req, res, next)  {
     try{
         // danceGenre by name
         const {name} = req.body;
@@ -86,7 +86,7 @@ danceGenreRouter
     
 })
 //update
-.get('/danceGenre/form/edit',checkAuth('admin'), async function(req, res, next){
+.post('/danceGenre/form/edit',checkAuth('admin'), async function(req, res, next){
     try{
         // danceGenre by name
         const {name} = req.body;

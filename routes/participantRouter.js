@@ -26,7 +26,7 @@ participantRouter
         next(err);
     }
 })
-.get('/participant/one',checkAuth('instructor'), async function(req, res, next)  {
+.post('/participant/one',checkAuth('instructor'), async function(req, res, next)  {
     try{
         // participant by email
         const {email} = req.body;
@@ -106,7 +106,7 @@ participantRouter
     
 })
 //update
-.get('/participant/form/edit',checkAuth('instructor'), async function(req, res, next){
+.post('/participant/form/edit',checkAuth('instructor'), async function(req, res, next){
     try{
         // participant by email
         const {email} = req.body;

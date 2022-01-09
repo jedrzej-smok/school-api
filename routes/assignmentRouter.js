@@ -126,7 +126,7 @@ assignmentRouter
 
     })
     //update
-    .get('/assignment/form/edit',checkAuth('instructor'), async function(req, res, next){
+    .post('/assignment/form/edit',checkAuth('instructor'), async function(req, res, next){
        
         try{
             const {instructorEmail, courseName} = req.body;
