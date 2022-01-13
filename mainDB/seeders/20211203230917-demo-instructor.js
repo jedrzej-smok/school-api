@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Instructors',[
       {
         email: 'admin@example.com',
-        password: 'admin',
+        password: '$2b$10$i.C3hFSKXL9P9arUIbhGiOdSjClabqQem/Dn0ZbP7smtOlTLWUe22',
         name:'admin',
         surname:'admin',
         isAdmin: 1,
@@ -14,7 +14,7 @@ module.exports = {
       },
       {
         email: 'janNowak@example.com',
-        password: 'jan',
+        password: '$2b$10$dMDlAOUz6t6ilv1o1wz0XeqagzmURvCKVvcnfmudh0P0Oy4d32bz6',
         name:'Jan',
         surname:'Nowak',
         isAdmin: 0,
@@ -23,7 +23,7 @@ module.exports = {
       },
       {
         email: 'lenaNowak@example.com',
-        password: 'lena',
+        password: '$2b$10$cBgXhRGSaMxtRrktKTnsxeziXtZ83NCiMJYoQNc4mLgPu09vts2b2',
         name:'Lena',
         surname:'Nowak',
         isAdmin: 0,

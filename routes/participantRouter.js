@@ -4,6 +4,7 @@ const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const db = require("../mainDB/models/index");
 const {NotFoundParticipantNameError,SameParticipantNameError} = require("../utils/errors");
 const {checkAuth} = require("../utils/auth");
+const {hashPassword} = require('../utils/myBcrypt');
 
 
 participantRouter
@@ -12,7 +13,7 @@ participantRouter
     try{
         // Find all participants
         const participants = await db.Participant.findAll({
-            attributes:['email','password','name','surname'],
+            attributes:['email','name','surname'],
             order:['participantId']
         });
         
@@ -76,7 +77,7 @@ participantRouter
             }
             const participant = await db.Participant.create({
                 email:email,
-                password:password,
+                password:await hashPassword(password),
                 name:name,
                 surname:surname
             });
@@ -86,7 +87,6 @@ participantRouter
                 .send(JSON.stringify(
                     {
                         email: participant.email,
-                        password:participant.password,
                         name:participant.name,
                         surname:participant.surname
                     })
@@ -114,7 +114,7 @@ participantRouter
             where:{
                 email:email
             },
-            attributes:['email','password','name','surname'],
+            attributes:['email','name','surname'],
         });
         if(!participant){
             throw new NotFoundParticipantNameError();
@@ -145,14 +145,24 @@ participantRouter
              }
          });
          
-         if(countParticpant||countInstructor){
+         if((countParticpant||countInstructor) && byEmail != email){
              throw new SameParticipantNameError();
          }
-        const tmp = await db.Participant.update({email: email, password:password, name:name, surname:surname},{
-            where:{
-                email: byEmail
-            }
-        });
+        let tmp;
+        if(password != ''){
+            tmp = await db.Participant.update({email: email, password:await hashPassword(password), name:name, surname:surname},{
+                where:{
+                    email: byEmail
+                }
+            });
+        }else{
+            tmp = await db.Participant.update({email: email, name:name, surname:surname},{
+                where:{
+                    email: byEmail
+                }
+            });
+        }
+        
         if(tmp>0){
             res
                 .status(200)

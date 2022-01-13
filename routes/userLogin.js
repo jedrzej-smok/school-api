@@ -5,6 +5,7 @@ const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const db = require("../mainDB/models/index");
 const {NotFoundUserNameError, InvalidPasswordError} = require("../utils/errors");
 const {checkAuth} = require("../utils/auth");
+const{comparePassword, hashPassword} = require('../utils/myBcrypt')
 
 userLoginRouter
     .post('/in',checkAuth('guest'), async function(req, res, next)  {
@@ -18,7 +19,7 @@ userLoginRouter
                 throw new NotFoundUserNameError();
             }
             if(participant){
-                if(participant.password !== password){
+                if(!await comparePassword(password, participant.password)){
                     throw new InvalidPasswordError();
                 }
                 else{
@@ -29,7 +30,7 @@ userLoginRouter
             }
     
             if(instructor){
-                if(instructor.password !== password){
+                if(!await comparePassword(password, instructor.password)){
                     throw new InvalidPasswordError();
                 }
                 else if (instructor.isAdmin){

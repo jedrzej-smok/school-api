@@ -4,7 +4,7 @@ const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const db = require("../mainDB/models/index");
 const {NotFoundInstructorNameError, SameInstructorNameError} = require("../utils/errors");
 const {checkAuth} = require("../utils/auth");
-
+const {hashPassword} = require('../utils/myBcrypt');
 
 instructorRouter
 //read
@@ -12,7 +12,7 @@ instructorRouter
     try{
         // Find all instructors
         const instructors = await db.Instructor.findAll({
-            attributes:['email','password','name','surname','isAdmin'],
+            attributes:['email','name','surname','isAdmin'],
             order:['instructorId']
         });
         
@@ -62,7 +62,7 @@ instructorRouter
             const {email,password,name,surname,isAdmin} = req.body;
             const instructor = await db.Instructor.create({
                 email:email,
-                password:password,
+                password: await hashPassword(password),
                 name:name,
                 surname:surname,
                 isAdmin:isAdmin
@@ -73,7 +73,6 @@ instructorRouter
                 .send(JSON.stringify(
                     {
                         email: instructor.email,
-                        password:instructor.password,
                         name:instructor.name,
                         surname:instructor.surname,
                         isAdmin:instructor.isAdmin
@@ -102,7 +101,7 @@ instructorRouter
             where:{
                 email:email
             },
-            attributes:['email','password','name','surname','isAdmin'],
+            attributes:['email','name','surname','isAdmin'],
         });
         if(!instructor){
             throw new NotFoundInstructorNameError();
@@ -127,11 +126,21 @@ instructorRouter
         if(checkInstructor && email!==byEmail){
             throw new SameInstructorNameError();
         }
-        const tmp = await db.Instructor.update({email: email, password:password, name:name, surname:surname, isAdmin:isAdmin},{
-            where:{
-                email: byEmail
-            }
-        });
+        let tmp;
+        if(password != ''){
+            tmp = await db.Instructor.update({email: email, password:await hashPassword(password), name:name, surname:surname, isAdmin:isAdmin},{
+                where:{
+                    email: byEmail
+                }
+            });
+        }else{
+            tmp = await db.Instructor.update({email: email, name:name, surname:surname, isAdmin:isAdmin},{
+                where:{
+                    email: byEmail
+                }
+            });
+        }
+        
         if(tmp>0){
             res
                 .status(200)
