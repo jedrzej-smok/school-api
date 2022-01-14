@@ -54,7 +54,7 @@ function handleError(err,req,res,next){
     if(err instanceof InvalidPasswordError){
         res.status(401);
         res.send({
-            message: 'Nie właściwe hasło',
+            message: 'niewłaściwe hasło',
         });
         return;
     }
