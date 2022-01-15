@@ -2,7 +2,7 @@ const express = require('express');
 const homeRouter = express.Router();
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const db = require("../mainDB/models/index");
-const {} = require("../utils/errors");
+const {NotFoundInstructorNameError} = require("../utils/errors");
 const {checkAuth} = require("../utils/auth");
 
 homeRouter
@@ -60,7 +60,47 @@ homeRouter
             next(err);
         }
     })
+    .get('/instructor',checkAuth('guest'), async function(req, res, next)  {
+        try{
+            // Find all instructor
+            const instructors = await db.Instructor.findAll({
+                attributes:['name','surname','instructorId'],
+                order:['instructorId'],
+                where:{
+                    isAdmin:0
+                }
+            });
+            
+            const resinstructor = await Promise.all(instructors.map(async (instructor) => {
+                
+                const tmp = await db.Instructor.findByPk(instructor.instructorId);
+                
+                if(!tmp){
+                    throw new NotFoundInstructorNameError();
+                }
+                const danceGenres = await tmp.getDanceGenres();
+                const resDance = danceGenres.map(danceGenre => danceGenre.name)
+                return {
+                    name: instructor.name,
+                    surname: instructor.surname,
+                    qualifications: resDance
+                };
+                })
+            );
+            console.log('resCourses:', resinstructor);
+
+            res
+                .status(200)
+                .send(JSON.stringify(resinstructor));
+    
+        }catch(err){
+            console.log(err);
+            next(err);
+        }
+    })
 
 module.exports = {
     homeRouter,
 }
+
+
