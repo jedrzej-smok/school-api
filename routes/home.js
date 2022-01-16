@@ -60,7 +60,7 @@ homeRouter
             next(err);
         }
     })
-    .get('/instructor',checkAuth('guest'), async function(req, res, next)  {
+    .get('/instructors',checkAuth('guest'), async function(req, res, next)  {
         try{
             // Find all instructor
             const instructors = await db.Instructor.findAll({
