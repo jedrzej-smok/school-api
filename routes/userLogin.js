@@ -54,7 +54,7 @@ userLoginRouter
     .post('/out', async function(req, res, next){
 
         res
-            .clearCookie("userdId")
+            .clearCookie("userId")
             .cookie("role", "guest")
             .status(200)
             .send({message:'Logged out'});
