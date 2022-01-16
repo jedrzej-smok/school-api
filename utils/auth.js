@@ -5,8 +5,10 @@ function checkAuth(routeRole){
             res.cookie("role", "guest");
         }
 
-
-        if(userRole !== routeRole){
+        if(userRole === "admin" && routeRole === "instructor"){
+            console.log('AUTH');
+            next();
+        }else if(userRole !== routeRole){
             res.status(401);
             res.send({
                 message: 'Brak dostępu',
