@@ -12,7 +12,10 @@ instructorRouter
     try{
         // Find all instructors
         const instructors = await db.Instructor.findAll({
-            attributes:['email','name','surname','isAdmin'],
+            attributes:['email','name','surname'],
+            where:{
+                isAdmin: 0
+            },
             order:['instructorId']
         });
         
@@ -32,9 +35,10 @@ instructorRouter
         const {email} = req.body;
         const instructor = await db.Instructor.findOne({
             where:{
-                email:email
+                email:email,
+                isAdmin:0
             },
-            attributes:['email','password','name','surname','isAdmin']
+            attributes:['email','password','name','surname']
         });
         if(!instructor){
             throw new NotFoundInstructorNameError();
@@ -59,7 +63,8 @@ instructorRouter
     try{
         try{
             //instructor create
-            const {email,password,name,surname,isAdmin} = req.body;
+            const {email,password,name,surname} = req.body;
+            const isAdmin = 0;
             const instructor = await db.Instructor.create({
                 email:email,
                 password: await hashPassword(password),
@@ -101,7 +106,7 @@ instructorRouter
             where:{
                 email:email
             },
-            attributes:['email','name','surname','isAdmin'],
+            attributes:['email','name','surname'],
         });
         if(!instructor){
             throw new NotFoundInstructorNameError();
@@ -120,7 +125,8 @@ instructorRouter
 })
 .put('/instructor',checkAuth('admin'), async function(req, res, next)  {
     try{
-        const {byEmail, email, password,name,surname,isAdmin} = req.body;
+        const {byEmail, email, password,name,surname} = req.body;
+        const isAdmin = 0;
         const checkInstructor =  await db.Instructor.findOne({where:{email: email}});
         // console.log(`checkInstructor:${checkInstructor}`);
         if(checkInstructor && email!==byEmail){
@@ -130,13 +136,15 @@ instructorRouter
         if(password != ''){
             tmp = await db.Instructor.update({email: email, password:await hashPassword(password), name:name, surname:surname, isAdmin:isAdmin},{
                 where:{
-                    email: byEmail
+                    email: byEmail,
+                    isAdmin:0
                 }
             });
         }else{
             tmp = await db.Instructor.update({email: email, name:name, surname:surname, isAdmin:isAdmin},{
                 where:{
-                    email: byEmail
+                    email: byEmail,
+                    isAdmin:0
                 }
             });
         }
