@@ -163,7 +163,8 @@ instructorRouter
         // instructor by email
         const deleted = await db.Instructor.destroy({
             where:{
-                email: req.body.email
+                email: req.body.email,
+                isAdmin: 0
             }
         });
         if(deleted>0){
