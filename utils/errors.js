@@ -34,6 +34,7 @@ class NotFoundRegistrationNameError extends Error{};
 
 class NotFoundRecordingNameError extends Error{};
 class SameRecordingNameError extends Error{};
+class AtLeastOneInstructorError extends Error{};
 
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
@@ -217,6 +218,13 @@ function handleError(err,req,res,next){
         });
         return;
     }
+    if(err instanceof AtLeastOneInstructorError){
+        res.status(400);
+        res.send({
+            message: 'Istnieje tylko 1 admin, nie można go usunąć',
+        });
+        return;
+    }
 
 
 
@@ -251,5 +259,6 @@ module.exports={
     SameParticipantNameError,
     NotFoundRegistrationNameError,
     NotFoundRecordingNameError,
-    SameRecordingNameError
+    SameRecordingNameError,
+    AtLeastOneInstructorError
 }

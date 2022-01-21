@@ -2,7 +2,7 @@ const express = require('express');
 const instructorRouter = express.Router();
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 const db = require("../mainDB/models/index");
-const {NotFoundInstructorNameError, SameInstructorNameError} = require("../utils/errors");
+const {NotFoundInstructorNameError, SameInstructorNameError,AtLeastOneInstructorError} = require("../utils/errors");
 const {checkAuth} = require("../utils/auth");
 const {hashPassword} = require('../utils/myBcrypt');
 
@@ -169,6 +169,14 @@ instructorRouter
 .delete('/instructor',checkAuth('admin'), async function(req, res, next)  {
     try{
         // instructor by email
+        const { count, rows } = await db.Instructor.findAndCountAll({
+            where: {
+              isAdmin:1
+            }
+          });
+        if(count==1 && rows[0].email === req.body.email){
+            throw new AtLeastOneInstructorError();
+        }
         const deleted = await db.Instructor.destroy({
             where:{
                 email: req.body.email,
