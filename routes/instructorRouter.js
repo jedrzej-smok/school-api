@@ -174,8 +174,10 @@ instructorRouter
               isAdmin:1
             }
           });
-        if(count==1 && rows[0].email === req.body.email){
-            throw new AtLeastOneInstructorError();
+        if(count==1){
+            if(rows[0].email === req.body.email){
+                throw new AtLeastOneInstructorError();
+            }
         }
         const deleted = await db.Instructor.destroy({
             where:{
