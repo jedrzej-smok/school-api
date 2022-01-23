@@ -105,13 +105,13 @@ participantAccountRouter
                 level: course.Level.name,
                 danceGenre: course.DanceGenre.name,
                 instructors: instructors,
-                recordings: recordings.map(recording => {
-                    return {
-                        'id': recording.danceRecordingId,
-                        'name': recording.name,
-                        'source': recording.source
-                    };
-                })
+                // recordings: recordings.map(recording => {
+                //     return {
+                //         'id': recording.danceRecordingId,
+                //         'name': recording.name,
+                //         'source': recording.source
+                //     };
+                // })
             };
             
             res
