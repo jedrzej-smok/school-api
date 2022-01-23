@@ -12,12 +12,13 @@ recordingRouter
     try{
         // Find all songs
         const recordings = await db.Recording.findAll({
-            attributes:['name','source','courseId'],
+            attributes:['name','source','courseId','danceRecordingId'],
             order:['danceRecordingId'],
             include: db.Course
         });
         const resRecordings = recordings.map((recording) => {
             return {
+                recordingId: recording.danceRecordingId,
                 name: recording.name,
                 source: recording.source,
                 course: recording.Course.name
