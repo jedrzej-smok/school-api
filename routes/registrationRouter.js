@@ -19,6 +19,7 @@ registrationRouter
                 const registrations = await participant.getRegistrations();
                 for (const registration of registrations) {
                     resRegistrations.push({
+                        'registrationId': registration.registrationId,
                         'participant': participant.email,
                         'course': (await registration.getCourse()).name
                     });
