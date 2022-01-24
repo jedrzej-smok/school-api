@@ -13,7 +13,7 @@ homeRouter
             // .redirect('/main.html');
             .sendFile('main.html', {root:"../DanceSchool"});
     })
-    .get('/course',checkAuth('guest'), async function(req, res, next)  {
+    .get('/course',/*checkAuth('guest'),*/ async function(req, res, next)  {
         try{
             // Find all courses
             const courses = await db.Course.findAll({
@@ -60,7 +60,7 @@ homeRouter
             next(err);
         }
     })
-    .get('/instructors',checkAuth('guest'), async function(req, res, next)  {
+    .get('/instructors',/*checkAuth('guest'),*/ async function(req, res, next)  {
         try{
             // Find all instructor
             const instructors = await db.Instructor.findAll({
