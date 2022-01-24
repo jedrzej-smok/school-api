@@ -97,6 +97,38 @@ instructorAccountRouter
             next(err);
         }
     })
+    .get('/participantsNames',checkAuth('instructor'), async function(req, res, next)  {
+        try{
+            // Find all danceGenres
+            const participants = await db.Participant.findAll({
+                attributes:['email'],
+                order:['participantId']
+            });
+            res
+                .status(200)
+                .send(JSON.stringify(participants.map(participant => participant.email)));
+    
+        }catch(err){
+            console.log(err);
+            next(err);
+        }
+    })
+    .get('/instructorsNames',checkAuth('instructor'), async function(req, res, next)  {
+        try{
+            // Find all danceGenres
+            const instructors = await db.Instructor.findAll({
+                attributes:['email'],
+                order:['instructorId']
+            });
+            res
+                .status(200)
+                .send(JSON.stringify(instructors.map(instructor => instructor.email)));
+    
+        }catch(err){
+            console.log(err);
+            next(err);
+        }
+    })
 
 module.exports = {
     instructorAccountRouter,
