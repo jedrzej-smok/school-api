@@ -20,7 +20,8 @@ assignmentRouter
                 for (const assignment of assignments) {
                     resAssignments.push({
                         'instructor': instructor.email,
-                        'course': (await assignment.getCourse()).name
+                        'course': (await assignment.getCourse()).name,
+                        'earnings': assignment.earnings
                     });
                 }
             }
