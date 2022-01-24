@@ -21,7 +21,8 @@ registrationRouter
                     resRegistrations.push({
                         'registrationId': registration.registrationId,
                         'participant': participant.email,
-                        'course': (await registration.getCourse()).name
+                        'course': (await registration.getCourse()).name,
+                        'attendance': registration.attendance
                     });
                 }
             }
@@ -218,9 +219,42 @@ registrationRouter
     })
     .put('/registration',checkAuth('instructor'), async function(req, res, next)  {
         try{
-            const {registrationId, attendance} = req.body;
+            const {registrationId, attendance, participantEmail, courseName} = req.body;
+            const participant = await db.Participant.findOne({
+                where:{
+                    email: participantEmail
+                },
+                attributes:['email','participantId'],
+            });
+            if(!participant){
+                throw new NotFoundParticipantNameError();
+            }
+            const course = await db.Course.findOne({
+                where:{
+                    name: courseName
+                },
+                attributes:['name','courseId']
+            });
+            if(!course){
+                throw new NotFoundCourseNameError();
+            }
+    
+            const registration = await db.Registration.findOne({
+                where:{
+                    courseId: course.courseId,
+                    participantId: participant.participantId
+                }
+            });
 
-            const tmp = await db.Registration.update({attendance: attendance},{
+            if(registration){
+                if(registration.registrationId != registrationId){
+                    res
+                        .status(400)
+                        .send({message:`registration already exits`});
+                        return;
+                    }
+            }
+            const tmp = await db.Registration.update({attendance: attendance, courseId: course.courseId, participantId: participant.participantId},{
                 where:{
                     registrationId: registrationId
                 }
