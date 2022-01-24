@@ -177,7 +177,7 @@ assignmentRouter
     })
     .put('/assignment',checkAuth('instructor'), async function(req, res, next)  {
         try{
-            const {instructorEmail, courseName, earnings} = req.body;
+            const {instructorEmail, courseName, earnings,instructorEmailNew, courseNameNew} = req.body;
             const instructor = await db.Instructor.findOne({
                 where:{
                     email: instructorEmail
@@ -196,6 +196,24 @@ assignmentRouter
             if(!course){
                 throw new NotFoundCourseNameError();
             }
+            const instructorNew = await db.Instructor.findOne({
+                where:{
+                    email: instructorEmailNew
+                },
+                attributes:['instructorId'],
+            });
+            if(!instructorNew){
+                throw new NotFoundInstructorNameError();
+            }
+            const courseNew = await db.Course.findOne({
+                where:{
+                    name: courseNameNew
+                },
+                attributes:['courseId']
+            });
+            if(!courseNew){
+                throw new NotFoundCourseNameError();
+            }
     
             const assignment = await db.Assignment.findOne({
                 where:{
@@ -206,7 +224,24 @@ assignmentRouter
             if(!assignment){
                 throw new NotFoundAssignmentNameError();
             }
-            const tmp = await db.Assignment.update({earnings: earnings},{
+            const assignmentDouble = await db.Assignment.findOne({
+                where:{
+                    courseId: courseNew.courseId,
+                    instructorId: instructorNew.instructorId
+                }
+            });
+            if(assignmentDouble){
+                if(assignmentDouble.assignmentId != assignment.assignmentId){
+                    res
+                        .status(400)
+                        .send({
+                            message:  `assignment already exists`  
+                        });
+                    return;
+                }
+                
+            }
+            const tmp = await db.Assignment.update({earnings: earnings, courseId: courseNew.courseId, instructorId: instructorNew.instructorId },{
                 where:{
                     assignmentId: assignment.assignmentId
                 }
