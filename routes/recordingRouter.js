@@ -165,7 +165,8 @@ recordingRouter
         const countRecording = await db.Recording.count({
             where:{
                 name: name,
-                courseId: course.courseId
+                courseId: course.courseId,
+                danceRecordingId:{[Op.ne]: recordingId}
             }
          });
         if(countRecording>0){
