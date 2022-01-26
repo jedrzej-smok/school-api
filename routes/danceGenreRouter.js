@@ -26,6 +26,30 @@ danceGenreRouter
         next(err);
     }
 })
+.post('/danceGenre/filter',checkAuth('admin'), async function(req, res, next)  {
+    try{
+        // Find all danceGenres
+        const {name} = req.body;
+        const danceGenres = await db.DanceGenre.findAll({
+            where:{
+                name:{
+                    [Op.startsWith]:name
+                }
+            },
+            attributes:['name'],
+            order:['danceGenreId']
+        });
+        
+        console.log("All danceGenres:", JSON.stringify(danceGenres));
+        res
+            .status(200)
+            .send(JSON.stringify(danceGenres));
+
+    }catch(err){
+        console.log(err);
+        next(err);
+    }
+})
 .post('/danceGenre/one',checkAuth('admin'), async function(req, res, next)  {
     try{
         // danceGenre by name

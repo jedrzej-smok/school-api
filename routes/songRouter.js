@@ -32,6 +32,36 @@ songRouter
         next(err);
     }
 })
+.post('/song/filter',checkAuth('admin'), async function(req, res, next)  {
+    try{
+        // Find all songs
+        const songs = await db.Song.findAll({
+            where:{
+                title:{
+                    [Op.startsWith]:req.body.title
+                }
+            },
+            attributes:['title','source','performerId'],
+            order:['songId'],
+            include: db.Performer
+        });
+        const resSongs = songs.map((song) => {
+            return {
+                'title': song.title,
+                'source': song.source,
+                'performer': song.Performer.name
+            };
+        })
+        console.log("All songs:", JSON.stringify(songs));
+        res
+            .status(200)
+            .send(JSON.stringify(resSongs));
+
+    }catch(err){
+        console.log(err);
+        next(err);
+    }
+})
 .post('/song/one',checkAuth('admin'), async function(req, res, next)  {
     try{
         // song by title

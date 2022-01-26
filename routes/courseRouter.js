@@ -25,6 +25,30 @@ courseRouter
         next(err);
     }
 })
+.post('/course/filter',checkAuth('instructor'), async function(req, res, next)  {
+    try{
+        // Find all courses
+        const {name} = req.body;
+        const courses = await db.Course.findAll({
+            where:{
+                name:{
+                    [Op.startsWith]:name
+                }
+            },
+            attributes:['name'],
+            order:['courseId']
+        });
+
+        const resCourses = courses.map( (course) => course.name);
+
+        res
+            .status(200)
+            .send(JSON.stringify(resCourses));
+    }catch(err){
+        console.log(err);
+        next(err);
+    }
+})
 .post('/course/one',checkAuth('instructor'), async function(req, res, next)  {
     try{
         const {byName} = req.body;

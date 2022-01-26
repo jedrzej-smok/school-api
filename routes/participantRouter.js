@@ -27,6 +27,29 @@ participantRouter
         next(err);
     }
 })
+.post('/participant/filter',checkAuth('instructor'), async function(req, res, next)  {
+    try{
+        const {email} = req.body;
+        const participants = await db.Participant.findAll({
+            where:{
+                email:{
+                    [Op.startsWith]:email
+                }
+            },
+            attributes:['email','name','surname'],
+            order:['participantId']
+        });
+        
+        console.log("All participants:", JSON.stringify(participants));
+        res
+            .status(200)
+            .send(JSON.stringify(participants));
+
+    }catch(err){
+        console.log(err);
+        next(err);
+    }
+})
 .post('/participant/one',checkAuth('instructor'), async function(req, res, next)  {
     try{
         // participant by email

@@ -29,6 +29,30 @@ instructorRouter
         next(err);
     }
 })
+.post('/instructor/filter',checkAuth('admin'), async function(req, res, next)  {
+    try{
+        // Find all instructors
+        const {email} = req.body;
+        const instructors = await db.Instructor.findAll({
+            attributes:['email','name','surname','isAdmin'],
+            where:{
+                email:{
+                    [Op.startsWith]:email
+                }
+            },
+            order:['instructorId']
+        });
+        
+        console.log("All instructors:", JSON.stringify(instructors));
+        res
+            .status(200)
+            .send(JSON.stringify(instructors));
+
+    }catch(err){
+        console.log(err);
+        next(err);
+    }
+})
 .post('/instructor/one',checkAuth('admin'), async function(req, res, next)  {
     try{
         // instructor by email

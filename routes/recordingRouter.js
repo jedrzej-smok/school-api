@@ -34,6 +34,37 @@ recordingRouter
         next(err);
     }
 })
+.post('/recording/filter',checkAuth('instructor'), async function(req, res, next)  {
+    try{
+        const {name}=req.body;
+        const recordings = await db.Recording.findAll(
+            {where:{
+                name:{
+                    [Op.startsWith]:name
+                }
+            },
+            attributes:['name','source','courseId','danceRecordingId'],
+            order:['danceRecordingId'],
+            include: db.Course
+        });
+        const resRecordings = recordings.map((recording) => {
+            return {
+                recordingId: recording.danceRecordingId,
+                name: recording.name,
+                source: recording.source,
+                course: recording.Course.name
+            };
+        })
+        console.log("All recordings:", JSON.stringify(resRecordings));
+        res
+            .status(200)
+            .send(JSON.stringify(resRecordings));
+
+    }catch(err){
+        console.log(err);
+        next(err);
+    }
+})
 .post('/recording/oneCourse',checkAuth('instructor'), async function(req, res, next)  {
     try{
         //  course's recordings 

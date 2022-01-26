@@ -24,6 +24,28 @@ levelRouter
         next(err);
     }
 })
+.post('/level/filter',checkAuth('admin'), async function(req, res, next)  {
+    try{
+        const {name} = req.body;
+        const levels = await db.Level.findAll({
+            where:{
+                name:{
+                    [Op.startsWith]:name
+                }
+            },
+            attributes:['name'],
+            order:['levelId']
+        });
+        console.log("All levels:", JSON.stringify(levels));
+        res
+            .status(200)
+            .send(JSON.stringify(levels));
+
+    }catch(err){
+        console.log(err);
+        next(err);
+    }
+})
 .get('/level/:byName',checkAuth('admin'), async function(req, res, next)  {
     try{
         // level by name

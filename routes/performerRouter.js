@@ -24,6 +24,28 @@ performerRouter
         next(err);
     }
 })
+.post('/performer/filter',checkAuth('admin'), async function(req, res, next)  {
+    try{
+        const {name} = req.body;
+        const performers = await db.Performer.findAll({
+            where:{
+                name:{
+                    [Op.startsWith]:name
+                }
+            },
+            attributes:['name','musicGenre'],
+            order:['performerId']
+        });
+        console.log("All performers:", JSON.stringify(performers));
+        res
+            .status(200)
+            .send(JSON.stringify(performers));
+
+    }catch(err){
+        console.log(err);
+        next(err);
+    }
+})
 .get('/performer/:byName',checkAuth('admin'), async function(req, res, next)  {
     try{
         // performer by name

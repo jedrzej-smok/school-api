@@ -24,6 +24,29 @@ roomRouter
         next(err);
     }
 })
+.post('/room/filter',checkAuth('admin'), async function(req, res, next)  {
+    try{
+        // Find all rooms
+        const {name} = req.body;
+        const rooms = await db.Room.findAll({
+            where:{
+                name:{
+                    [Op.startsWith]:name
+                }
+            },
+            attributes:['name','capacity'],
+            order:['roomId']
+        });
+        console.log("All rooms:", JSON.stringify(rooms));
+        res
+            .status(200)
+            .send(JSON.stringify(rooms));
+
+    }catch(err){
+        console.log(err);
+        next(err);
+    }
+})
 .get('/room/:byName',checkAuth('admin'), async function(req, res, next)  {
     try{
         // room by name
