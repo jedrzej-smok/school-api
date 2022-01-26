@@ -35,6 +35,39 @@ assignmentRouter
             next(err);
         }
     })
+    .post('/assignment/filter',checkAuth('instructor'), async function(req, res, next)  {
+        try{
+            // Find all assignments
+            const instructors = await db.Instructor.findAll({
+                where:{
+                    email:{
+                        [Op.startsWith]:req.body.email
+                    }
+                },
+                attributes:['email','instructorId'],
+                order:['instructorId']
+            });
+            let resAssignments = [];
+            for (const instructor of instructors) {
+                const assignments = await instructor.getAssignments();
+                for (const assignment of assignments) {
+                    resAssignments.push({
+                        'instructor': instructor.email,
+                        'course': (await assignment.getCourse()).name,
+                        'earnings': assignment.earnings
+                    });
+                }
+            }
+            console.log("All assignments:", JSON.stringify(resAssignments));
+            res
+                .status(200)
+                .send(JSON.stringify(resAssignments));
+
+        }catch(err){
+            console.log(err);
+            next(err);
+        }
+    })
     .get('/assignment/oneInstructor',checkAuth('instructor'), async function(req, res, next)  {
         try{
             // assignment by instructor

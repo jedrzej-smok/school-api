@@ -36,6 +36,40 @@ registrationRouter
             next(err);
         }
     })
+    .post('/registration/filter',checkAuth('instructor'), async function(req, res, next)  {
+        try{
+            // Find all registrations
+            const participants = await db.Participant.findAll({
+                where:{
+                    email:{
+                        [Op.startsWith]:req.body.email
+                    }
+                },
+                attributes:['email','participantId'],
+                order:['participantId']
+            });
+            let resRegistrations = [];
+            for (const participant of participants) {
+                const registrations = await participant.getRegistrations();
+                for (const registration of registrations) {
+                    resRegistrations.push({
+                        'registrationId': registration.registrationId,
+                        'participant': participant.email,
+                        'course': (await registration.getCourse()).name,
+                        'attendance': registration.attendance
+                    });
+                }
+            }
+            console.log("All registrations:", JSON.stringify(resRegistrations));
+            res
+                .status(200)
+                .send(JSON.stringify(resRegistrations));
+
+        }catch(err){
+            console.log(err);
+            next(err);
+        }
+    })
     .post('/registration/oneParticipant',checkAuth('instructor'), async function(req, res, next)  {
         try{
             // registration by participant
