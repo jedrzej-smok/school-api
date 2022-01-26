@@ -2,7 +2,7 @@ const express = require('express');
 const assignmentRouter = express.Router();
 const { Sequelize, Op, Model, DataTypes, where } = require("sequelize");
 const db = require("../mainDB/models/index");
-const {NotFoundInstructorNameError, NotFoundCourseNameError, NotFoundAssignmentNameError} = require("../utils/errors");
+const {NotFoundInstructorNameError, NotFoundCourseNameError, NotFoundAssignmentNameError,ExtraError} = require("../utils/errors");
 const {checkAuth} = require("../utils/auth");
 
 assignmentRouter
@@ -118,10 +118,21 @@ assignmentRouter
                 where:{
                     name: courseName
                 },
-                attributes:['courseId']
+                attributes:['courseId','name','price','numberClasses','startTime','requirements', 'roomId', 'songId', 'levelId', 'danceGenreId'],
+                include:[db.DanceGenre]
             });
             if(!course){
                 throw new NotFoundCourseNameError();
+            }
+            const danceGenres = await instructor.getDanceGenres();
+            let flag = 0;
+            for (const danceGenre of danceGenres) {
+                if(danceGenre.name == course.DanceGenre.name){
+                    flag +=1;
+                }
+            }
+            if(flag == 0){
+                throw new ExtraError();
             }
 
             const [assignment, created] = await db.Assignment.findOrCreate({
@@ -243,12 +254,25 @@ assignmentRouter
                 where:{
                     name: courseNameNew
                 },
-                attributes:['courseId']
+                attributes:['courseId','name','price','numberClasses','startTime','requirements', 'roomId', 'songId', 'levelId', 'danceGenreId'],
+                include:[db.DanceGenre]
             });
             if(!courseNew){
                 throw new NotFoundCourseNameError();
             }
-    
+            
+            const danceGenres = await instructorNew.getDanceGenres();
+            let flag = 0;
+            
+            for (const danceGenre of danceGenres) {
+                console.log(danceGenre.name);
+                if(danceGenre.name == courseNew.DanceGenre.name){
+                    flag +=1;
+                }
+            }
+            if(flag == 0){
+                throw new ExtraError();
+            }
             const assignment = await db.Assignment.findOne({
                 where:{
                     courseId: course.courseId,

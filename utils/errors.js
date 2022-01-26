@@ -36,6 +36,8 @@ class NotFoundRecordingNameError extends Error{};
 class SameRecordingNameError extends Error{};
 class AtLeastOneInstructorError extends Error{};
 
+class ExtraError extends Error{};
+
 function handleError(err,req,res,next){
     if(err instanceof NotFoundError){
         res.status(404);
@@ -226,6 +228,14 @@ function handleError(err,req,res,next){
         return;
     }
 
+    if(err instanceof ExtraError){
+        res.status(400);
+        res.send({
+            message: 'Instrukotr nie ma uprawnien do kursu',
+        });
+        return;
+    }
+
 
 
     console.error(err.message);
@@ -260,5 +270,6 @@ module.exports={
     NotFoundRegistrationNameError,
     NotFoundRecordingNameError,
     SameRecordingNameError,
-    AtLeastOneInstructorError
+    AtLeastOneInstructorError,
+    ExtraError
 }
